@@ -6,5 +6,6 @@ type Empresa struct {
 	QuantidadeRespostas  int32   `bson:"quantidadeRespostas"`
 	QuantidadeMinutos    float64 `bson:"quantidadeMinutos"`
 	QuantidadeImagensPDF int32   `bson:"quantidadeImagensPdf"`
+	BaseUrlUchat         string  `bson:"baseUrlUchat"`
 	WorkSpaceID          string  `bson:"workSpaceId"`
 }
