@@ -75,7 +75,7 @@ func (r *ProcessRepository) ProcessaImagem(msg entities.MessageItem) (string, er
 		return "", GravaURLReferencia
 	}
 
-	ContagemDeImagensProcessadas := r.db.ContagemDeImagensProcessadas()
+	ContagemDeImagensProcessadas := r.db.ContagemDeImagensProcessadas(r.cfg.WorkSpaceID)
 	if ContagemDeImagensProcessadas != nil {
 		return "", ContagemDeImagensProcessadas
 	}
@@ -95,7 +95,7 @@ func (r *ProcessRepository) ProcessaAudio(msg entities.MessageItem) (string, err
 		return AudioTranscription.Text, GravaURLReferencia
 	}
 
-	err = r.db.ContagemDeMinutosAudio(AudioTranscription.DurationSegundos)
+	err = r.db.ContagemDeMinutosAudio(AudioTranscription.DurationSegundos, r.cfg.WorkSpaceID)
 	if err != nil {
 		return AudioTranscription.Text, err
 	}
@@ -115,7 +115,7 @@ func (r *ProcessRepository) ProcessaFile(texto entities.MessageItem) (string, er
 		return DetalhesDocumento.(string), GravaURLReferencia
 	}
 
-	err = r.db.ContagemDeImagensProcessadas()
+	err = r.db.ContagemDeImagensProcessadas(r.cfg.WorkSpaceID)
 	if err != nil {
 		return DetalhesDocumento.(string), err
 	}

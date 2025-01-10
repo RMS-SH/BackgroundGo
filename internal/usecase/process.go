@@ -111,7 +111,7 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 		}
 	}
 
-	_ = b.DB.ContagemDeRespostas()
+	_ = b.DB.ContagemDeRespostas(dados.Body[0].IDWorkSpace)
 
 	return nil
 }
@@ -176,7 +176,7 @@ func (b *Backgroud) ProcessaBackgroundFila(dados entities.Dados) error {
 		}
 	}
 
-	_ = b.DB.ContagemDeRespostas()
+	_ = b.DB.ContagemDeRespostas(dados.Body[0].IDWorkSpace)
 
 	return nil
 }

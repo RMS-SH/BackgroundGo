@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/RMS-SH/BackgroundGo/internal/entities"
+	entities_db "github.com/RMS-SH/BackgroundGo/internal/infra/db/entities"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -13,12 +13,11 @@ import (
 
 type ClientMongoDB struct {
 	ctx context.Context
-	cfg entities.Config
 	db  *mongo.Client
 }
 
-func NewClientMongoDB(ctx context.Context, cfg entities.Config, db *mongo.Client) *ClientMongoDB {
-	return &ClientMongoDB{ctx: ctx, cfg: cfg, db: db}
+func NewClientMongoDB(ctx context.Context, db *mongo.Client) *ClientMongoDB {
+	return &ClientMongoDB{ctx: ctx, db: db}
 }
 
 func (c *ClientMongoDB) ArmazenaReferenciasDeArquivos(texto, url string) error {
@@ -87,34 +86,32 @@ func (c *ClientMongoDB) ConsultaURLReferencia(url string) (string, error) {
 	return result.Texto, nil
 }
 
-func (c *ClientMongoDB) ConsultaDadosEmpresa() (string, error) {
+func (c *ClientMongoDB) ConsultaDadosEmpresa(workSpaceID string) (*entities_db.Empresa, error) {
 	// Define a coleção
 	collection := c.db.Database("rms").Collection("clientesRms")
 
 	// Define o filtro para a consulta
 	filter := bson.M{
-		"workSpaceId": c.cfg.WorkSpaceID, // Supondo que o campo _id seja uma string. Ajuste se for ObjectID.
+		"workSpaceId": workSpaceID, // Supondo que o campo _id seja uma string. Ajuste se for ObjectID.
 	}
 
 	// Estrutura para armazenar o resultado
-	var result struct {
-		Nome string `bson:"nome"`
-	}
+	var result entities_db.Empresa
 
 	// Realiza a consulta
 	err := collection.FindOne(c.ctx, filter).Decode(&result)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return "", fmt.Errorf("nenhuma empresa encontrada com o ID: %s", c.cfg.WorkSpaceID)
+			return nil, fmt.Errorf("nenhuma empresa encontrada com o ID: %s", workSpaceID)
 		}
-		return "", err
+		return nil, err
 	}
 
 	// Retorna o nome da empresa encontrada
-	return result.Nome, nil
+	return &result, nil
 }
 
-func (c *ClientMongoDB) ContagemDeRespostas() error {
+func (c *ClientMongoDB) ContagemDeRespostas(workSpaceID string) error {
 	// Define a coleção
 	collection := c.db.Database("rms").Collection("consumo")
 
@@ -123,7 +120,7 @@ func (c *ClientMongoDB) ContagemDeRespostas() error {
 
 	// Define o filtro para encontrar o documento do workspace e da data atual
 	filter := bson.M{
-		"workspace": c.cfg.WorkSpaceID,
+		"workspace": workSpaceID,
 		"data":      today,
 	}
 
@@ -149,7 +146,7 @@ func (c *ClientMongoDB) ContagemDeRespostas() error {
 	return nil
 }
 
-func (c *ClientMongoDB) ContagemDeMinutosAudio(minutos float64) error {
+func (c *ClientMongoDB) ContagemDeMinutosAudio(minutos float64, workSpaceID string) error {
 	// Define a coleção
 	collection := c.db.Database("rms").Collection("consumo")
 
@@ -158,7 +155,7 @@ func (c *ClientMongoDB) ContagemDeMinutosAudio(minutos float64) error {
 
 	// Define o filtro para encontrar o documento do workspace e da data atual
 	filter := bson.M{
-		"workspace": c.cfg.WorkSpaceID,
+		"workspace": workSpaceID,
 		"data":      today,
 	}
 
@@ -184,7 +181,7 @@ func (c *ClientMongoDB) ContagemDeMinutosAudio(minutos float64) error {
 	return nil
 }
 
-func (c *ClientMongoDB) ContagemDeImagensProcessadas() error {
+func (c *ClientMongoDB) ContagemDeImagensProcessadas(workSpaceID string) error {
 	// Define a coleção
 	collection := c.db.Database("rms").Collection("consumo")
 
@@ -193,7 +190,7 @@ func (c *ClientMongoDB) ContagemDeImagensProcessadas() error {
 
 	// Define o filtro para encontrar o documento do workspace e da data atual
 	filter := bson.M{
-		"workspace": c.cfg.WorkSpaceID,
+		"workspace": workSpaceID,
 		"data":      today,
 	}
 
@@ -219,7 +216,7 @@ func (c *ClientMongoDB) ContagemDeImagensProcessadas() error {
 	return nil
 }
 
-func (c *ClientMongoDB) ContagemDeArquivosProcessados() error {
+func (c *ClientMongoDB) ContagemDeArquivosProcessados(workSpaceID string) error {
 	// Define a coleção
 	collection := c.db.Database("rms").Collection("consumo")
 
@@ -228,7 +225,7 @@ func (c *ClientMongoDB) ContagemDeArquivosProcessados() error {
 
 	// Define o filtro para encontrar o documento do workspace e da data atual
 	filter := bson.M{
-		"workspace": c.cfg.WorkSpaceID,
+		"workspace": workSpaceID,
 		"data":      today,
 	}
 

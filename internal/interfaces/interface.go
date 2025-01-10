@@ -3,6 +3,7 @@ package interfaces
 import (
 	ad "github.com/RMS-SH/BackgroundGo/adapters"
 	"github.com/RMS-SH/BackgroundGo/internal/entities"
+	entities_db "github.com/RMS-SH/BackgroundGo/internal/infra/db/entities"
 )
 
 type Process interface {
@@ -19,11 +20,11 @@ type Entrega interface {
 type DB interface {
 	ArmazenaReferenciasDeArquivos(texto, url string) error
 	ConsultaURLReferencia(url string) (string, error)
-	ConsultaDadosEmpresa() (string, error)
-	ContagemDeRespostas() error
-	ContagemDeMinutosAudio(minutos float64) error
-	ContagemDeImagensProcessadas() error
-	ContagemDeArquivosProcessados() error
+	ConsultaDadosEmpresa(workSpaceID string) (*entities_db.Empresa, error)
+	ContagemDeRespostas(workSpaceID string) error
+	ContagemDeMinutosAudio(minutos float64, workSpaceID string) error
+	ContagemDeImagensProcessadas(workSpaceID string) error
+	ContagemDeArquivosProcessados(workSpaceID string) error
 }
 
 type Internal interface {
