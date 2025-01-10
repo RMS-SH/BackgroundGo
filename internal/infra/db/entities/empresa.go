@@ -2,7 +2,7 @@ package entities_db
 
 type Empresa struct {
 	Nome                 string  `bson:"nome"`
-	skOpenAI             string  `bson:"skOpenAI"`
+	SkOpenAI             string  `bson:"skOpenAI"`
 	QuantidadeRespostas  int32   `bson:"quantidadeRespostas"`
 	QuantidadeMinutos    float64 `bson:"quantidadeMinutos"`
 	QuantidadeImagensPDF int32   `bson:"quantidadeImagensPdf"`
