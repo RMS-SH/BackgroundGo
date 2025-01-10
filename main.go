@@ -93,3 +93,7 @@ func (bk *Backgroud) GerarEntiteInterna(
 		ArraysVarRetorno:  arraysVarRetorno,
 	}
 }
+
+func (bk *Backgroud) RetornaStructInternal() *entities.MessageItem {
+	return &entities.MessageItem{}
+}
