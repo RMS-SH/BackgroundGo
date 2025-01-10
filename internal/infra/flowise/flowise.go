@@ -60,7 +60,7 @@ func (c *ClientFlowise) SendText(text string) (string, error) {
 	}
 
 	// Fazendo o request HTTP
-	req, err := http.NewRequestWithContext(c.ctx, "POST", "http://localhost:7500/filaflowise", bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequestWithContext(c.ctx, "POST", "http://localhost:8080/filaflowise", bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return "", fmt.Errorf("erro ao criar request: %v", err)
 	}
