@@ -94,6 +94,6 @@ func (bk *Backgroud) GerarEntiteInterna(
 	}
 }
 
-func (bk *Backgroud) RetornaStructInternal() *entities.MessageItem {
-	return &entities.MessageItem{}
+func (bk *Backgroud) RetornaStructInternal() []entities.MessageItem {
+	return []entities.MessageItem{}
 }
