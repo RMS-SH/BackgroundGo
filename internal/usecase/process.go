@@ -123,6 +123,8 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 	}
 
 	b.Validador.SetPalavrasProibidas(b.DadosCliente.PalavrasProibidas)
+	b.Validador.SetFilterByRegex(b.DadosCliente.PalavraRGEX)
+
 	if !b.Validador.DeveEnviarMensagem(resp) {
 		for _, v := range TratarTexto {
 			time.Sleep(500 * time.Millisecond)

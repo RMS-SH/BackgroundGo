@@ -38,4 +38,6 @@ type ProcessaMotorIA interface {
 type ValidadorMensagem interface {
 	DeveEnviarMensagem(mensagem string) bool
 	SetPalavrasProibidas(palavras []string)
+	ApplyFilterByRegex(mensagem string) string
+	SetFilterByRegex(pattern string) error
 }

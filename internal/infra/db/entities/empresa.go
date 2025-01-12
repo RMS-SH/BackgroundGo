@@ -9,4 +9,5 @@ type Empresa struct {
 	BaseUrlUchat         string   `bson:"baseUrlUchat"`
 	WorkSpaceID          string   `bson:"workSpaceId"`
 	PalavrasProibidas    []string `bson:"palavrasProibidas"`
+	PalavraRGEX          string   `bson:"palavraRGEX"`
 }
