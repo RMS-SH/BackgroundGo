@@ -23,6 +23,7 @@ func (bk *Backgroud) Proccess(
 	db *mongo.Client,
 	baseUrlUchat string,
 	ctx context.Context,
+	dadosCliente entities_db.Empresa,
 ) error {
 	return compose.BackgroundCompose(
 		Data,
@@ -30,6 +31,7 @@ func (bk *Backgroud) Proccess(
 		db,
 		baseUrlUchat,
 		ctx,
+		dadosCliente,
 	)
 }
 

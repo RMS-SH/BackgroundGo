@@ -7,20 +7,39 @@ import (
 	"time"
 
 	"github.com/RMS-SH/BackgroundGo/internal/entities"
+	entities_db "github.com/RMS-SH/BackgroundGo/internal/infra/db/entities"
 	"github.com/RMS-SH/BackgroundGo/internal/interfaces"
 	utilitariosgorms "github.com/RMS-SH/UtilitariosGoRMS"
 )
 
 type Backgroud struct {
-	Process interfaces.Process
-	Entrega interfaces.Entrega
-	DB      interfaces.DB
-	ctx     context.Context
-	IA      interfaces.ProcessaMotorIA
+	Process      interfaces.Process
+	Entrega      interfaces.Entrega
+	DB           interfaces.DB
+	ctx          context.Context
+	IA           interfaces.ProcessaMotorIA
+	Validador    interfaces.ValidadorMensagem
+	DadosCliente entities_db.Empresa
 }
 
-func NewBackgroud(process interfaces.Process, entrega interfaces.Entrega, db interfaces.DB, ctx context.Context, IA interfaces.ProcessaMotorIA) *Backgroud {
-	return &Backgroud{Process: process, Entrega: entrega, DB: db, ctx: ctx, IA: IA}
+func NewBackgroud(
+	process interfaces.Process,
+	entrega interfaces.Entrega,
+	db interfaces.DB,
+	ctx context.Context,
+	IA interfaces.ProcessaMotorIA,
+	validador interfaces.ValidadorMensagem,
+	dadosCliente entities_db.Empresa,
+) *Backgroud {
+	return &Backgroud{
+		Process:      process,
+		Entrega:      entrega,
+		DB:           db,
+		ctx:          ctx,
+		IA:           IA,
+		Validador:    validador,
+		DadosCliente: dadosCliente,
+	}
 }
 
 func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
@@ -103,11 +122,14 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 		return err
 	}
 
-	for _, v := range TratarTexto {
-		time.Sleep(500 * time.Millisecond)
-		err = b.Entrega.EnviaMensagem(v.RespostaIA)
-		if err != nil {
-			return err
+	b.Validador.SetPalavrasProibidas(b.DadosCliente.PalavrasProibidas)
+	if !b.Validador.DeveEnviarMensagem(resp) {
+		for _, v := range TratarTexto {
+			time.Sleep(500 * time.Millisecond)
+			err = b.Entrega.EnviaMensagem(v.RespostaIA)
+			if err != nil {
+				return err
+			}
 		}
 	}
 

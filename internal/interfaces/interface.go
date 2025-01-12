@@ -34,3 +34,8 @@ type Internal interface {
 type ProcessaMotorIA interface {
 	SendText(text string) (string, error)
 }
+
+type ValidadorMensagem interface {
+	DeveEnviarMensagem(mensagem string) bool
+	SetPalavrasProibidas(palavras []string)
+}
