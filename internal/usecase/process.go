@@ -126,7 +126,7 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 		return err
 	}
 
-	if !b.Validador.DeveEnviarMensagem(resp) {
+	if b.Validador.DeveEnviarMensagem(resp) {
 		for _, v := range TratarTexto {
 			time.Sleep(500 * time.Millisecond)
 			err = b.Entrega.EnviaMensagem(v.RespostaIA)
