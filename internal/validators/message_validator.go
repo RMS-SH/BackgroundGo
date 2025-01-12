@@ -21,7 +21,7 @@ func NewMessageValidator() *MessageValidator {
 }
 
 // SetFilterByRegex compila a expressão regular fornecida e a define como filtro.
-func (v *MessageValidator) SetFilterByRegex(pattern string) {
+func (v *MessageValidator) SetFilterByRegex(pattern string) error {
 	compiledRegex, err := regexp.Compile(pattern)
 	if err != nil {
 		return fmt.Errorf("erro ao compilar regex: %v", err)
