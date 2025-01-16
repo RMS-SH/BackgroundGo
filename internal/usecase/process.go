@@ -18,7 +18,6 @@ type Backgroud struct {
 	DB           interfaces.DB
 	ctx          context.Context
 	IA           interfaces.ProcessaMotorIA
-	Validador    interfaces.ValidadorMensagem
 	DadosCliente entities_db.Empresa
 }
 
@@ -28,7 +27,6 @@ func NewBackgroud(
 	db interfaces.DB,
 	ctx context.Context,
 	IA interfaces.ProcessaMotorIA,
-	validador interfaces.ValidadorMensagem,
 	dadosCliente entities_db.Empresa,
 ) *Backgroud {
 	return &Backgroud{
@@ -37,7 +35,6 @@ func NewBackgroud(
 		DB:           db,
 		ctx:          ctx,
 		IA:           IA,
-		Validador:    validador,
 		DadosCliente: dadosCliente,
 	}
 }
@@ -117,22 +114,19 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 		return err
 	}
 
-	b.Validador.SetPalavrasProibidas(b.DadosCliente.PalavrasProibidas)
-	_ = b.Validador.SetFilterByRegex(b.DadosCliente.PalavraRGEX)
-	TextoIA := b.Validador.ApplyFilterByRegex(resp)
+	if resp == "" {
+		return nil
+	}
 
-	TratarTexto, err := utilitariosgorms.ProcessInputText(TextoIA, "url")
+	TratarTexto, err := utilitariosgorms.ProcessInputText(resp, "url")
 	if err != nil {
 		return err
 	}
-
-	if b.Validador.DeveEnviarMensagem(resp) {
-		for _, v := range TratarTexto {
-			time.Sleep(500 * time.Millisecond)
-			err = b.Entrega.EnviaMensagem(v.RespostaIA)
-			if err != nil {
-				return err
-			}
+	for _, v := range TratarTexto {
+		time.Sleep(500 * time.Millisecond)
+		err = b.Entrega.EnviaMensagem(v.RespostaIA)
+		if err != nil {
+			return err
 		}
 	}
 

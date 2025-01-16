@@ -11,7 +11,6 @@ import (
 	"github.com/RMS-SH/BackgroundGo/internal/infra/uchat"
 	"github.com/RMS-SH/BackgroundGo/internal/repositories"
 	"github.com/RMS-SH/BackgroundGo/internal/usecase"
-	"github.com/RMS-SH/BackgroundGo/internal/validators"
 )
 
 func BackgroundCompose(
@@ -26,9 +25,8 @@ func BackgroundCompose(
 	dbClient := infra.NewClientFirestore(ctx, db)
 	internal := uchat.NewClientUchat(ctx, cfg)
 	ia := infra_flowise.NewClientFlowise(ctx, cfg)
-	validador := validators.NewMessageValidator()
 	rp := repositories.NewProcessRepository(dbClient, internal, ctx, cfg)
-	uc := usecase.NewBackgroud(rp, internal, dbClient, ctx, ia, validador, dadosCliente)
+	uc := usecase.NewBackgroud(rp, internal, dbClient, ctx, ia, dadosCliente)
 
 	return uc.ProcessaBackground(entities.Dados{Body: Data})
 }
