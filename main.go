@@ -3,24 +3,24 @@ package backgroundgo
 import (
 	"context"
 
+	"cloud.google.com/go/firestore"
 	"github.com/RMS-SH/BackgroundGo/internal/compose"
 	"github.com/RMS-SH/BackgroundGo/internal/entities"
 	entities_db "github.com/RMS-SH/BackgroundGo/internal/infra/db/entities"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Backgroud struct {
-	db *mongo.Client
+	db *firestore.Client
 }
 
-func NewBackgroud(db *mongo.Client) *Backgroud {
+func NewBackgroud(db *firestore.Client) *Backgroud {
 	return &Backgroud{db: db}
 }
 
 func (bk *Backgroud) Proccess(
 	Data []entities.MessageItem,
 	apiKey string,
-	db *mongo.Client,
+	db *firestore.Client,
 	baseUrlUchat string,
 	ctx context.Context,
 	dadosCliente entities_db.Empresa,

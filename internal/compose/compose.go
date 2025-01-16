@@ -3,6 +3,7 @@ package compose
 import (
 	"context"
 
+	"cloud.google.com/go/firestore"
 	"github.com/RMS-SH/BackgroundGo/internal/entities"
 	infra "github.com/RMS-SH/BackgroundGo/internal/infra/db"
 	entities_db "github.com/RMS-SH/BackgroundGo/internal/infra/db/entities"
@@ -11,19 +12,18 @@ import (
 	"github.com/RMS-SH/BackgroundGo/internal/repositories"
 	"github.com/RMS-SH/BackgroundGo/internal/usecase"
 	"github.com/RMS-SH/BackgroundGo/internal/validators"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func BackgroundCompose(
 	Data []entities.MessageItem,
 	apiKey string,
-	db *mongo.Client,
+	db *firestore.Client,
 	baseUrlUchat string,
 	ctx context.Context,
 	dadosCliente entities_db.Empresa,
 ) error {
 	cfg := entities.NewConfig(Data[0], apiKey, baseUrlUchat)
-	dbClient := infra.NewClientMongoDB(ctx, db)
+	dbClient := infra.NewClientFirestore(ctx, db)
 	internal := uchat.NewClientUchat(ctx, cfg)
 	ia := infra_flowise.NewClientFlowise(ctx, cfg)
 	validador := validators.NewMessageValidator()
@@ -34,10 +34,10 @@ func BackgroundCompose(
 }
 
 func ConsultaDadosEmpresaCompose(
-	db *mongo.Client,
+	db *firestore.Client,
 	ctx context.Context,
 	workSpaceID string,
 ) (*entities_db.Empresa, error) {
-	dbClient := infra.NewClientMongoDB(ctx, db)
+	dbClient := infra.NewClientFirestore(ctx, db)
 	return dbClient.ConsultaDadosEmpresa(workSpaceID)
 }
