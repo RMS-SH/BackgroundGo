@@ -8,5 +8,5 @@ type Empresa struct {
 	QuantidadeImagensPDF int32             `firestore:"quantidadeImagensPdf"`
 	BaseUrlUchat         string            `firestore:"baseUrlUchat"`
 	WorkSpaceID          string            `firestore:"workSpaceId"`
-	Vars                 map[string]string `firestore:"palavrasProibidas"`
+	Vars                 map[string]string `firestore:"vars"`
 }
