@@ -1,12 +1,13 @@
 package entities_db
 
 type Empresa struct {
-	Nome                 string            `firestore:"nome"`
-	SkOpenAI             string            `firestore:"skOpenAi"`
-	QuantidadeRespostas  int32             `firestore:"quantidadeRespostas"`
-	QuantidadeMinutos    float64           `firestore:"quantidadeMinutos"`
-	QuantidadeImagensPDF int32             `firestore:"quantidadeImagensPdf"`
-	BaseUrlUchat         string            `firestore:"baseUrlUchat"`
-	WorkSpaceID          string            `firestore:"workSpaceId"`
-	Vars                 map[string]string `firestore:"vars"`
+	Nome                 string   `bson:"nome"`
+	SkOpenAI             string   `bson:"skOpenAI"`
+	QuantidadeRespostas  int32    `bson:"quantidadeRespostas"`
+	QuantidadeMinutos    float64  `bson:"quantidadeMinutos"`
+	QuantidadeImagensPDF int32    `bson:"quantidadeImagensPdf"`
+	BaseUrlUchat         string   `bson:"baseUrlUchat"`
+	WorkSpaceID          string   `bson:"workSpaceId"`
+	PalavrasProibidas    []string `bson:"palavrasProibidas"`
+	PalavraRGEX          string   `bson:"palavraRGEX"`
 }
