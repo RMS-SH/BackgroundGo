@@ -117,11 +117,11 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 		return err
 	}
 
-	b.Validador.SetPalavrasProibidas(b.DadosCliente.PalavrasProibidas)
-	_ = b.Validador.SetFilterByRegex(b.DadosCliente.PalavraRGEX)
-	TextoIA := b.Validador.ApplyFilterByRegex(resp)
+	if resp == "" {
+		return nil
+	}
 
-	TratarTexto, err := utilitariosgorms.ProcessInputText(TextoIA, "url")
+	TratarTexto, err := utilitariosgorms.ProcessInputText(resp, "url")
 	if err != nil {
 		return err
 	}
