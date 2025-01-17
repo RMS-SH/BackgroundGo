@@ -66,6 +66,7 @@ func (c *ClientFlowise) SendText(text string) (string, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer v_RI9r7-+)hMoedU@~H[jUGJctDhU;")
 
 	// Executando o request
 	client := &http.Client{}
