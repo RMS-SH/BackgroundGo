@@ -25,6 +25,7 @@ func (bk *Backgroud) Proccess(
 	ctx context.Context,
 	dadosCliente entities_db.Empresa,
 	extraVars map[string]string,
+	tokenRMS string,
 ) error {
 	return compose.BackgroundCompose(
 		Data,
@@ -34,6 +35,7 @@ func (bk *Backgroud) Proccess(
 		ctx,
 		dadosCliente,
 		extraVars,
+		tokenRMS,
 	)
 }
 
