@@ -34,6 +34,7 @@ func (c *ClientRMS) SendText(text string) (string, error) {
 		text,               // question
 		c.cfg.URLMotorIA,   // url
 		c.cfg.ApiKeyOpenIA, // openaiKey
+		c.cfg.WorkSpaceID,  // workspaceId
 		c.cfg.ExtraVars,    // extraVars
 	)
 
