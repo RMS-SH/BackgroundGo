@@ -49,6 +49,7 @@ func (c *ClientRMS) SendText(text string) (string, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", "123"))
 
 	// Executando o request
 	client := &http.Client{}
