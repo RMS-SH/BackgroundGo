@@ -28,12 +28,13 @@ type ResponseItem struct {
 func (c *ClientRMS) SendText(text string) (string, error) {
 	// Criando o request usando o dto_RMSAI.CreateRequest
 	body := dto_rms.CreateRequest(
-		c.cfg.Nome,       // nome
-		c.cfg.Telefone,   // telefone
-		c.cfg.UUIDUser,   // UUIDUser
-		text,             // question
-		c.cfg.URLMotorIA, // url
-		c.cfg.ExtraVars,  // extraVars
+		c.cfg.Nome,         // nome
+		c.cfg.Telefone,     // telefone
+		c.cfg.UUIDUser,     // UUIDUser
+		text,               // question
+		c.cfg.URLMotorIA,   // url
+		c.cfg.ApiKeyOpenIA, // openaiKey
+		c.cfg.ExtraVars,    // extraVars
 	)
 
 	// Convertendo o body para JSON

@@ -23,6 +23,7 @@ func CreateRequest(
 	UUIDUser string,
 	question string,
 	url string,
+	openaiKey string,
 	extraVars ...map[string]string,
 
 ) RequestRMS {
@@ -31,6 +32,7 @@ func CreateRequest(
 	// Preenchendo os dados básicos
 	response.Body.Question = question
 	response.Body.SessionID = UUIDUser
+	response.Body.OpenAIKey = openaiKey
 
 	// Inicializando as variáveis padrão
 	vars := map[string]string{
