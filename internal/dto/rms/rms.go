@@ -12,8 +12,8 @@ type RequestRMS struct {
 		SessionID string            `json:"sessionId"`
 		OpenAIKey string            `json:"openaiKey"`
 	} `json:"Body"`
-	UserNs string `json:"UserNs"`
-	URLRms string `json:"https://rms-836463411403.us-east1.run.app"`
+	UserNs string `json:"userNs"`
+	URLRms string `json:"urlMotorAI"`
 }
 
 // Função para criar e retornar a struct no formato desejado
