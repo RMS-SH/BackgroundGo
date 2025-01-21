@@ -24,6 +24,7 @@ func (bk *Backgroud) Proccess(
 	baseUrlUchat string,
 	ctx context.Context,
 	dadosCliente entities_db.Empresa,
+	extraVars map[string]string,
 ) error {
 	return compose.BackgroundCompose(
 		Data,
@@ -32,6 +33,7 @@ func (bk *Backgroud) Proccess(
 		baseUrlUchat,
 		ctx,
 		dadosCliente,
+		extraVars,
 	)
 }
 

@@ -12,12 +12,14 @@ type Config struct {
 	URLMotorIA    string
 	Telefone      string
 	Nome          string
+	ExtraVars     map[string]string
 }
 
 func NewConfig(
 	MessageItem MessageItem,
 	ApiOpenIA string,
 	BaseUrlUchat string,
+	ExtraVars map[string]string,
 ) Config {
 	return Config{
 		ApiKeyOpenIA:  ApiOpenIA,
@@ -30,5 +32,6 @@ func NewConfig(
 		URLMotorIA:    MessageItem.MotorIA,
 		Telefone:      MessageItem.Telefone,
 		Nome:          MessageItem.Nome,
+		ExtraVars:     ExtraVars,
 	}
 }
