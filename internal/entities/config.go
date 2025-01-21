@@ -28,7 +28,7 @@ func NewConfig(
 		PromptArquivo:  MessageItem.PromptArquivo,
 		PromptImagem:   MessageItem.PromptImagem,
 		UUIDUser:       MessageItem.UserNS,
-		WorkSpaceID:    MessageItem.NomeWorkspace,
+		WorkSpaceID:    MessageItem.IDWorkSpace,
 		ApiKeyBot:      MessageItem.ApiKeyBot,
 		BaseUrlUchat:   BaseUrlUchat,
 		URLMotorIA:     MessageItem.MotorIA,
