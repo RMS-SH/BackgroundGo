@@ -22,8 +22,9 @@ func BackgroundCompose(
 	ctx context.Context,
 	dadosCliente entities_db.Empresa,
 	extraVars map[string]string,
+	tokenRMS string,
 ) error {
-	cfg := entities.NewConfig(Data[0], apiKey, baseUrlUchat, extraVars)
+	cfg := entities.NewConfig(Data[0], apiKey, baseUrlUchat, extraVars, tokenRMS)
 	dbClient := infra.NewClientFirestore(ctx, db)
 	internal := uchat.NewClientUchat(ctx, cfg)
 	ia := infra_rmsai.NewClientRMSAI(ctx, cfg)
