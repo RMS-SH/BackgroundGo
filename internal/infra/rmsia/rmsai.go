@@ -25,7 +25,7 @@ type ResponseItem struct {
 	Response string `json:"response"`
 }
 
-func (c *ClientRMS) SendText(text string) (string, error) {
+func (c *ClientRMS) SendText(text, apikey string) (string, error) {
 	// Criando o request usando o dto_RMSAI.CreateRequest
 	body := dto_rms.CreateRequest(
 		c.cfg.Nome,         // nome
@@ -35,6 +35,7 @@ func (c *ClientRMS) SendText(text string) (string, error) {
 		c.cfg.URLMotorIA,   // url
 		c.cfg.ApiKeyOpenIA, // openaiKey
 		c.cfg.WorkSpaceID,  // workspaceId
+		apikey,             // apiKeyBot
 		c.cfg.ExtraVars,    // extraVars
 	)
 

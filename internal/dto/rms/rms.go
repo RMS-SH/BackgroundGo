@@ -8,10 +8,12 @@ import (
 type RequestRMS struct {
 	Body struct {
 		Question    string            `json:"question"`
-		Vars        map[string]string `json:"vars"`
+		Vars        map[string]string `json:"variables"`
 		SessionID   string            `json:"sessionId"`
 		OpenAIKey   string            `json:"openaiKey"`
 		WorkspaceId string            `json:"workspaceId"`
+		UserNs      string            `json:"userNs"`
+		ApiKey      string            `json:"apiKeyBot"`
 	} `json:"Body"`
 	UserNs string `json:"userNs"`
 	URLRms string `json:"urlMotorAI"`
@@ -26,6 +28,7 @@ func CreateRequest(
 	url string,
 	openaiKey string,
 	workspaceId string,
+	apiKeyBot string,
 	extraVars ...map[string]string,
 
 ) RequestRMS {
@@ -36,6 +39,7 @@ func CreateRequest(
 	response.Body.SessionID = UUIDUser
 	response.Body.OpenAIKey = openaiKey
 	response.Body.WorkspaceId = workspaceId
+	response.Body.ApiKey = apiKeyBot
 
 	// Inicializando as variáveis padrão
 	vars := map[string]string{

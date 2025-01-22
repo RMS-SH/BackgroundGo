@@ -112,7 +112,7 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 	// Une os resultados mantendo a ordem original
 	TexUnion := strings.Join(results, " ")
 
-	resp, err := b.IA.SendText(TexUnion + " " + dados.Body[0].JSONString)
+	resp, err := b.IA.SendText(TexUnion+" "+dados.Body[0].JSONString, dados.Body[0].ApiKeyBot)
 	if err != nil {
 		return err
 	}
@@ -181,7 +181,7 @@ func (b *Backgroud) ProcessaBackgroundFila(dados entities.Dados) error {
 	TexUnion := strings.Join(results, " ")
 
 	// Envia o texto combinado para a IA
-	resp, err := b.IA.SendText(TexUnion)
+	resp, err := b.IA.SendText(TexUnion, dados.Body[0].ApiKeyBot)
 	if err != nil {
 		return err
 	}

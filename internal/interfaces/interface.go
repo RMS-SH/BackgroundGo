@@ -32,7 +32,7 @@ type Internal interface {
 }
 
 type ProcessaMotorIA interface {
-	SendText(text string) (string, error)
+	SendText(text, apikey string) (string, error)
 }
 
 type ValidadorMensagem interface {
