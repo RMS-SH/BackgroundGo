@@ -40,6 +40,7 @@ func CreateRequest(
 	response.Body.OpenAIKey = openaiKey
 	response.Body.WorkspaceId = workspaceId
 	response.Body.ApiKey = apiKeyBot
+	response.Body.UserNs = UUIDUser
 
 	// Inicializando as variáveis padrão
 	vars := map[string]string{
