@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type Config struct {
 	ApiKeyOpenIA   string
 	ApiKeyEntrega  string
@@ -14,6 +16,7 @@ type Config struct {
 	Nome           string
 	BearerTokenRMS string
 	ExtraVars      map[string]string
+	Timeout        time.Duration
 }
 
 func NewConfig(

@@ -29,11 +29,13 @@ func (c *ClientUchat) EnviaMensagem(message string) error {
 	// Monta o corpo da requisição
 	type RequestBody struct {
 		UserNS  string `json:"user_ns"`
-		Content string `json:"content"`
+		Trigger string `json:"field_name"`
+		Content string `json:"value"`
 	}
 
 	requestBody := &RequestBody{
 		UserNS:  c.cfg.UUIDUser,
+		Trigger: "entrega_mensagem_ia",
 		Content: message,
 	}
 
@@ -44,10 +46,10 @@ func (c *ClientUchat) EnviaMensagem(message string) error {
 	}
 
 	// Define a URL
-	url := fmt.Sprintf("%s/api/subscriber/send-text", c.cfg.BaseUrlUchat)
+	url := fmt.Sprintf("%s/api/subscriber/set-user-field-by-name", c.cfg.BaseUrlUchat)
 
 	// Cria a requisição HTTP
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return fmt.Errorf("erro ao criar a requisição HTTP: %v", err)
 	}
