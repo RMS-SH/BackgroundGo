@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go/firestore v1.18.0
 	github.com/RMS-SH/OpenIA v0.0.0-20250109193328-769e2d5f68fc
 	github.com/RMS-SH/UtilitariosGoRMS v0.0.0-20250109202518-bc720a6bfbe5
+	github.com/stretchr/testify v1.10.0
 	google.golang.org/api v0.217.0
 	google.golang.org/grpc v1.69.4
 )
@@ -25,7 +26,6 @@ require (
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sashabaranov/go-openai v1.36.1 // indirect
-	github.com/stretchr/testify v1.10.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.54.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.54.0 // indirect
 	go.opentelemetry.io/otel v1.31.0 // indirect

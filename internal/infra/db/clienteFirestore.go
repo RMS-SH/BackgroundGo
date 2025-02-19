@@ -2,6 +2,8 @@ package infra
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"time"
 
@@ -29,19 +31,19 @@ func NewClientFirestore(ctx context.Context, client *firestore.Client) *ClientFi
 // ArmazenaReferenciasDeArquivos faz o papel do 'upsert' no Firestore.
 // Cria ou atualiza o documento cuja chave será igual à URL fornecida.
 func (c *ClientFirestore) ArmazenaReferenciasDeArquivos(texto, url string) error {
-	// A coleção de destino
+	// Gera um hash da URL para usar como ID do documento
+	urlHash := sha256.Sum256([]byte(url))
+	docID := hex.EncodeToString(urlHash[:])
+
 	collection := c.client.Collection("referenciasTemporarias")
+	docRef := collection.Doc(docID)
 
-	// Definimos o documento com ID igual a 'url'
-	docRef := collection.Doc(url)
-
-	// Dados que serão gravados/atualizados
 	data := map[string]interface{}{
-		"texto": texto,
-		"url":   url,
+		"texto":    texto,
+		"url":      url,
+		"criadoEm": firestore.ServerTimestamp,
 	}
 
-	// Set com MergeAll faz a junção dos campos, caso o documento já exista
 	_, err := docRef.Set(c.ctx, data, firestore.MergeAll)
 	if err != nil {
 		return fmt.Errorf("erro ao gravar/atualizar a referência de arquivo: %v", err)
@@ -51,11 +53,15 @@ func (c *ClientFirestore) ArmazenaReferenciasDeArquivos(texto, url string) error
 }
 
 func (c *ClientFirestore) ConsultaURLReferencia(url string) (string, error) {
+	// Gera o mesmo hash da URL usado no ArmazenaReferenciasDeArquivos
+	urlHash := sha256.Sum256([]byte(url))
+	docID := hex.EncodeToString(urlHash[:])
+
 	// A coleção de destino
 	collection := c.client.Collection("referenciasTemporarias")
 
-	// Documento com ID = url
-	docRef := collection.Doc(url)
+	// Documento com ID = hash da URL
+	docRef := collection.Doc(docID)
 
 	// Tenta obter o documento
 	docSnap, err := docRef.Get(c.ctx)
