@@ -3,7 +3,7 @@ package entities
 type MessageItem struct {
 	Type              string `json:"type,omitempty"`
 	Content           string `json:"content,omitempty"`
-	Reference         string `json:"mid":"type,omitempty"`
+	Reference         string `json:"mid,omitempty"`
 	Nome              string `json:"nome,omitempty"`
 	Telefone          string `json:"telefone,omitempty"`
 	UserNS            string `json:"userNs,omitempty"`
