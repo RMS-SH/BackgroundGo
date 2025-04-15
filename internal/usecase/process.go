@@ -118,6 +118,7 @@ func (b *Backgroud) ProcessaBackground(dados entities.Dados) error {
 	}
 
 	if resp == "" {
+		_ = b.DB.ContagemDeRespostas(dados.Body[0].IDWorkSpace)
 		return nil
 	}
 
