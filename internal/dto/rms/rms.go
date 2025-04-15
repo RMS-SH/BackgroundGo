@@ -44,19 +44,20 @@ func CreateRequest(
 
 	// Inicializando as variáveis padrão
 	location, err := time.LoadLocation("America/Sao_Paulo")
+	var horaBrasilia time.Time
 	if err != nil {
-		location = time.UTC // Fallback para UTC em caso de erro
+		horaBrasilia = time.Now().Add(-3 * time.Hour)
+	} else {
+		horaBrasilia = time.Now().In(location)
 	}
 
-	horaBrasilia := time.Now().In(location)
-
 	vars := map[string]string{
-		"nome":            nome,                                       // Obtém do extraVars
-		"telefone":        telefone,                                   // Obtém do extraVars
-		"user_ns":         UUIDUser,                                   // Obtém do extraVars
-		"data_hora_atual": horaBrasilia.Format("02/01/2006 15:04:05"), // Formato DD/MM/YYYY HH:MM:SS no horário de Brasília
-		"saudacao":        getSaudacao(horaBrasilia.Hour()),           // Saudação baseada na hora de Brasília
-		"dia_semana":      getDiaSemana(horaBrasilia.Weekday()),       // Dia da semana em português baseado no horário de Brasília
+		"nome":            nome,
+		"telefone":        telefone,
+		"user_ns":         UUIDUser,
+		"data_hora_atual": horaBrasilia.Format("02/01/2006 15:04:05"),
+		"saudacao":        getSaudacao(horaBrasilia.Hour()),
+		"dia_semana":      getDiaSemana(horaBrasilia.Weekday()),
 	}
 
 	// Se extraVars foi fornecido, adiciona-as às Vars
